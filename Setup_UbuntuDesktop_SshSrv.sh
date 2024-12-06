@@ -17,7 +17,7 @@ sudo sed -i 's/^PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # 设置root账户密码（交互式）
 echo "设置root账户密码..."
-sudo passwd root
+echo 'root:1234' | sudo chpasswd
 
 # 重新启动SSH服务以应用更改
 echo "重新启动SSH服务..."
