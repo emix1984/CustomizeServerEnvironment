@@ -11,7 +11,7 @@ apt update
 
 # 安装其他必要的软件包，如git curl nano net-tools
 echo "2.安装终端系统常用软件包"
-apt-get -y install git curl nano tree net-tools
+apt-get -y install git curl nano tree net-tools screen
 
 # 安装必要的Python开发环境软件包
 echo "3.安装python开发包"
