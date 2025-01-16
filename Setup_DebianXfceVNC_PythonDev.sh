@@ -7,7 +7,7 @@ echo ">>> 配置Python开发环境 - 配置脚本开始执行"
 
 # 更新系统软件包列表
 echo "1.更新系统包管理清单"
-apt update
+apt update && clear
 
 # 安装其他必要的软件包，如git curl nano net-tools
 echo "2.安装终端系统常用软件包"
@@ -20,7 +20,7 @@ apt-get -y install openssl build-essential libssl-dev libffi-dev python3 python3
 # 交互式选择是否安装chromium-driver开发包
 echo "4.是否安装chromium-driver开发包？(y/n)"
 read choice
-if [ "$choice" == "y" ]; then
+if [ "$choice" = "y" ]; then
     echo "安装chromium-driver开发包"
     apt-get -y install chromium chromium-driver
 else
@@ -30,7 +30,7 @@ fi
 # 交互式选择是否安装系统桌面用软件包
 echo "5.是否安装系统桌面用软件包 - 可选？(y/n)"
 read choice
-if [ "$choice" == "y" ]; then
+if [ "$choice" = "y" ]; then
     echo "安装系统桌面用软件包 - 可选"
     apt-get -y install gedit gdebi
 else
