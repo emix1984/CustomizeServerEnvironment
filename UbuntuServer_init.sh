@@ -80,6 +80,17 @@ install_casaos() {
     check_command "安装CasaOS失败" "CasaOS安装成功"
 }
 
+# 清理系统
+clean_system() {
+    print_info "正在清理系统..."
+    sudo apt clean
+    sudo apt autoremove --purge -y
+    sudo logrotate -f /etc/logrotate.conf
+    rm -rf /var/cache/apt/archives/*
+    sudo rm -rf /tmp/*
+    check_command "系统清理失败" "系统清理成功"
+}
+
 # 主函数，按顺序调用各个模块
 main() {
     update_upgrade_system
@@ -88,6 +99,7 @@ main() {
     install_ssh_copy_id
     install_and_configure_ssh
     install_casaos
+    clean_system
     print_info "初始化配置完成"
 }
 
