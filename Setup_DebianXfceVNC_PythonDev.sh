@@ -23,10 +23,8 @@ read choice
 if [[ "$choice" == "y" ]]; then
     echo "安装chromium-driver开发包"
     apt-get -y install chromium chromium-driver
-elif [[ "$choice" == "n" ]]; then
-    echo "跳过安装chromium-driver开发包"
 else
-    echo "输入无效，跳过安装chromium-driver开发包"
+    echo "跳过安装chromium-driver开发包"
 fi
 
 # 交互式选择是否安装系统桌面用软件包
@@ -35,10 +33,8 @@ read choice
 if [[ "$choice" == "y" ]]; then
     echo "安装系统桌面用软件包 - 可选"
     apt-get -y install gedit gdebi
-elif [[ "$choice" == "n" ]]; then
-    echo "跳过安装系统桌面用软件包"
 else
-    echo "输入无效，跳过安装系统桌面用软件包"
+    echo "跳过安装系统桌面用软件包"
 fi
 
 # 清理缓存和临时文件
