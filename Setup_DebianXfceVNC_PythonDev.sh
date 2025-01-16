@@ -1,7 +1,7 @@
 #!/bin/bash
 # docker镜像要求：consol/debian-xfce-vnc
 # 作者：Emix1984
-# 日期：2024/12/06
+# 日期：2025/1/16
 
 echo ">>> 配置Python开发环境 - 配置脚本开始执行"
 
@@ -11,7 +11,7 @@ apt update
 
 # 安装其他必要的软件包，如git curl nano net-tools
 echo "2.安装终端系统常用软件包"
-apt-get -y install git curl nano tree net-tools screen
+apt-get -y install git curl nano tree unzip et-tools screen
 
 # 安装必要的Python开发环境软件包
 echo "3.安装python开发包"
@@ -30,7 +30,7 @@ echo "5.是否安装系统桌面用软件包 - 可选？(y/n)"
 read choice
 if [ "$choice" == "y" ]; then
     echo "安装系统桌面用软件包 - 可选"
-    apt-get -y install gedit gdebi unzip
+    apt-get -y install gedit gdebi
 fi
 
 # 清理缓存和临时文件
