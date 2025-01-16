@@ -11,7 +11,7 @@ apt update
 
 # 安装其他必要的软件包，如git curl nano net-tools
 echo "2.安装终端系统常用软件包"
-apt-get -y install git curl nano tree unzip et-tools screen
+apt-get -y install git curl nano tree unzip net-tools screen
 
 # 安装必要的Python开发环境软件包
 echo "3.安装python开发包"
@@ -23,6 +23,8 @@ read choice
 if [ "$choice" == "y" ]; then
     echo "安装chromium-driver开发包"
     apt-get -y install chromium chromium-driver
+else
+    echo "跳过安装chromium-driver开发包"
 fi
 
 # 交互式选择是否安装系统桌面用软件包
@@ -31,6 +33,8 @@ read choice
 if [ "$choice" == "y" ]; then
     echo "安装系统桌面用软件包 - 可选"
     apt-get -y install gedit gdebi
+else
+    echo "跳过安装系统桌面用软件包"
 fi
 
 # 清理缓存和临时文件
