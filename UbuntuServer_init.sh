@@ -30,18 +30,15 @@ update_upgrade_system() {
 # 安装通用工具
 install_common_tools() {
     print_info "正在安装通用工具..."
-    apt install -y curl nano tree net-tools screen ntp traceroute htop sshpass
+    apt install -y curl nano tree net-tools screen traceroute htop sshpass
     check_command "安装通用工具失败" "通用工具安装成功"
 }
 
 # 同步时区
-sync_timezone() {
+set_timezone() {
     print_info "正在将时区同步为首尔..."
     timedatectl set-timezone Asia/Seoul
     check_command "设置时区失败" "时区设置为首尔成功"
-    print_info "正在启动并启用NTP服务..."
-    systemctl start ntp && systemctl enable ntp
-    check_command "启动和启用NTP服务失败" "NTP服务启动和启用成功"
 }
 
 # 安装 ssh-copy-id
@@ -95,7 +92,7 @@ clean_system() {
 main() {
     update_upgrade_system
     install_common_tools
-    sync_timezone
+    set_timezone
     install_ssh_copy_id
     install_and_configure_ssh
     install_casaos
