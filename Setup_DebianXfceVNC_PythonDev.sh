@@ -6,7 +6,7 @@
 # 定义函数模块
 function update_system_packages() {
     echo ">>> 1.更新系统包管理清单"
-    apt update
+    apt update && apt upgrade -y && apt autoremove -y
 }
 
 function install_common_packages() {
