@@ -25,25 +25,16 @@ function install_desktop_packages() {
 }
 
 function install_chromium_driver() {
-    local choice
-    while true; do
-        echo ">>> Option: 是否安装chromium-driver开发包？(1: 安装, 2: 不安装)"
-        read -r choice
-        case "$choice" in
-            1)
-                echo "安装chromium-driver开发包"
-                apt-get -y install chromium chromium-driver
-                return 0  # 安装完成后继续执行后续脚本
-                ;;
-            2)
-                echo "跳过安装chromium-driver开发包，继续执行后续步骤。"
-                return 0  # 跳过安装，直接继续执行后续脚本
-                ;;
-            *)
-                echo "输入错误，请输入1或2。"
-                ;;
-        esac
-    done
+    local choice="$1"  # 获取命令行参数
+    case "$choice" in
+        y)
+            echo ">>> Option 5.安装chromium-driver开发包"
+            apt-get -y install chromium chromium-driver
+            ;;
+        *)
+            echo ">>> 跳过 Option 5.安装chromium-driver开发包，继续执行后续步骤。。。"
+            ;;
+    esac
 }
 
 function clean_system() {
@@ -58,7 +49,10 @@ update_system_packages
 install_common_packages
 install_python_dev_packages
 install_desktop_packages
-install_chromium_driver
+
+# 根据命令行参数决定是否安装chromium-driver
+install_chromium_driver "$1"
+
 clean_system
 
 echo "脚本执行完毕"
