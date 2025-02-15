@@ -30,7 +30,7 @@ update_upgrade_system() {
 # 安装通用工具
 install_common_tools() {
     print_info "正在安装通用工具..."
-    apt install -y curl nano tree net-tools screen traceroute htop sshpass
+    apt install -y curl wget nano tree net-tools screen traceroute htop sshpass apt-utils
     check_command "安装通用工具失败" "通用工具安装成功"
 }
 
