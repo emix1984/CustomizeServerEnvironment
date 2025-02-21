@@ -77,6 +77,17 @@ install_casaos() {
     check_command "安装CasaOS失败" "CasaOS安装成功"
 }
 
+# 增加命令历史记录的存储数量
+increase_history_size() {
+    print_info "正在增加命令历史记录的存储数量..."
+    echo "HISTSIZE=99999" >> /etc/profile
+    echo "HISTFILESIZE=99999" >> /etc/profile
+    check_command "设置命令历史记录失败" "命令历史记录设置成功"
+    print_info "重新加载配置文件以应用更改..."
+    source /etc/profile
+    check_command "重新加载配置文件失败" "配置文件重新加载成功"
+}
+
 # 清理系统
 clean_system() {
     print_info "正在清理系统..."
@@ -96,6 +107,7 @@ main() {
     install_ssh_copy_id
     install_and_configure_ssh
     install_casaos
+    increase_history_size  # 调用新增的模块
     clean_system
     print_info "初始化配置完成"
 }
