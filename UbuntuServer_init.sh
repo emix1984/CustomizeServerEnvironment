@@ -20,65 +20,65 @@ check_command() {
     fi
 }
 
-# 更新和升级系统
-update_upgrade_system() {
+# 模块：更新和升级系统
+module_update_upgrade_system() {
     print_info "正在更新和升级系统..."
     apt update && apt upgrade -y
     check_command "系统更新和升级失败" "系统更新和升级成功"
 }
 
-# 安装通用工具
-install_common_tools() {
+# 模块：安装通用工具
+module_install_common_tools() {
     print_info "正在安装通用工具..."
     apt install -y curl wget nano tree net-tools screen traceroute htop sshpass apt-utils
     check_command "安装通用工具失败" "通用工具安装成功"
 }
 
-# 同步时区
-set_timezone() {
+# 模块：同步时区
+module_set_timezone() {
     print_info "正在将时区同步为首尔..."
     timedatectl set-timezone Asia/Seoul
     check_command "设置时区失败" "时区设置为首尔成功"
 }
 
-# 安装 ssh-copy-id
-install_ssh_copy_id() {
+# 模块：安装 ssh-copy-id
+module_install_ssh_copy_id() {
     print_info "正在安装 ssh-copy-id..."
     apt install -y openssh-client
-    check_command "安装 ssh-copy-id 失败" "ssh-copy-id 安装成功"
+    check_command "安装 ssh-copy_id 失败" "ssh-copy_id 安装成功"
 }
 
-# 安装和配置OpenSSH服务
-install_and_configure_ssh() {
-    print_info "正在安装openssh-server和sudo..."
+# 模块：安装和配置OpenSSH服务
+module_install_and_configure_ssh() {
+    print_info "正在安装 openssh-server 和 sudo..."
     apt update && apt install -y openssh-server sudo
-    check_command "安装openssh-server和sudo失败" "openssh-server和sudo安装成功"
-    print_info "正在启动openssh-server..."
+    check_command "安装 openssh-server 和 sudo 失败" "openssh-server 和 sudo 安装成功"
+    print_info "正在启动 openssh-server..."
     service ssh start
-    check_command "启动openssh-server失败" "openssh-server启动成功"
-    print_info "正在配置SSH以允许root登录..."
+    check_command "启动 openssh-server 失败" "openssh-server 启动成功"
+    print_info "正在配置 SSH 以允许 root 登录..."
     if [ -f /etc/ssh/sshd_config ]; then
         # 备份原始配置文件
         cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
         echo "PasswordAuthentication yes" | tee -a /etc/ssh/sshd_config
         echo "PermitRootLogin yes" | tee -a /etc/ssh/sshd_config
         service sshd restart
-        check_command "配置SSH失败" "SSH配置为允许root登录成功"
+        check_command "配置 SSH 失败" "SSH 配置为允许 root 登录成功"
     else
-        print_error "/etc/ssh/sshd_config文件未找到"
+        print_error "/etc/ssh/sshd_config 文件未找到"
         exit 1
     fi
 }
 
-# 安装CasaOS
-install_casaos() {
-    print_info "正在安装CasaOS..."
+# 模块：安装 CasaOS
+module_install_casaos() {
+    print_info "正在安装 CasaOS..."
     curl -fsSL https://get.casaos.io | bash
-    check_command "安装CasaOS失败" "CasaOS安装成功"
+    check_command "安装 CasaOS 失败" "CasaOS 安装成功"
 }
 
-# 增加命令历史记录的存储数量
-increase_history_size() {
+# 模块：增加命令历史记录的存储数量
+module_increase_history_size() {
     print_info "正在增加命令历史记录的存储数量..."
     echo "HISTSIZE=99999" >> /etc/profile
     echo "HISTFILESIZE=99999" >> /etc/profile
@@ -88,8 +88,8 @@ increase_history_size() {
     check_command "重新加载配置文件失败" "配置文件重新加载成功"
 }
 
-# 清理系统
-clean_system() {
+# 模块：清理系统
+module_clean_system() {
     print_info "正在清理系统..."
     sudo apt clean
     sudo apt autoremove --purge -y
@@ -99,16 +99,30 @@ clean_system() {
     check_command "系统清理失败" "系统清理成功"
 }
 
+# 模块：修改 root 用户的默认工作目录
+module_change_root_home() {
+    local target_dir="/DATA/AppData"
+    print_info "正在修改 root 用户的默认工作目录为 $target_dir..."
+    if [ ! -d "$target_dir" ]; then
+        print_info "目标目录 $target_dir 不存在，正在创建..."
+        mkdir -p "$target_dir"
+        check_command "创建目录失败" "目标目录创建成功"
+    fi
+    usermod -d "$target_dir" root
+    check_command "修改 root 用户的工作目录失败" "root 用户的工作目录已更改为 $target_dir"
+}
+
 # 主函数，按顺序调用各个模块
 main() {
-    update_upgrade_system
-    install_common_tools
-    set_timezone
-    install_ssh_copy_id
-    install_and_configure_ssh
-    install_casaos
-    increase_history_size  # 调用新增的模块
-    clean_system
+    module_update_upgrade_system
+    module_install_common_tools
+    module_set_timezone
+    module_install_ssh_copy_id
+    module_install_and_configure_ssh
+    module_install_casaos
+    module_increase_history_size
+    module_change_root_home  # 调用新增的模块
+    module_clean_system
     print_info "初始化配置完成"
 }
 
