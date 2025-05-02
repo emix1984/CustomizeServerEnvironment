@@ -1,5 +1,3 @@
-
-# NoVNC-DebianXfce
 used for preset Ubuntu Server
 OS: Ubuntu Server 22.04 LTS (Jammy Jellyfish)
 
