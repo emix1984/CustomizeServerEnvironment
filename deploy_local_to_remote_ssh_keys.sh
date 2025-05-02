@@ -5,7 +5,7 @@ REMOTE_HOST="your_remote_host_ip_or_hostname"
 # 远程服务器的用户名（根据需要修改）
 REMOTE_USER="root"
 # 远程服务器的 SSH 端口（如果不是默认的 22 端口，请修改为实际端口）
-REMOTE_PORT="2222"  # 修改为实际端口号
+REMOTE_PORT="22"  # 修改为实际端口号
 
 # 打印信息函数
 print_info() {
