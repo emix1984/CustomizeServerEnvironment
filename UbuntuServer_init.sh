@@ -70,13 +70,6 @@ module_install_and_configure_ssh() {
     fi
 }
 
-# 模块：安装 CasaOS
-module_install_casaos() {
-    print_info "正在安装 CasaOS..."
-    curl -fsSL https://get.casaos.io | bash
-    check_command "安装 CasaOS 失败" "CasaOS 安装成功"
-}
-
 # 模块：增加命令历史记录的存储数量
 module_increase_history_size() {
     print_info "正在增加命令历史记录的存储数量..."
@@ -119,9 +112,8 @@ main() {
     module_set_timezone
     module_install_ssh_copy_id
     module_install_and_configure_ssh
-    module_install_casaos
     module_increase_history_size
-    module_change_root_home  # 调用新增的模块
+    module_change_root_home
     module_clean_system
     print_info "初始化配置完成"
 }
