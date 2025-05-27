@@ -62,7 +62,7 @@ module_install_and_configure_ssh() {
         cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
         echo "PasswordAuthentication yes" | tee -a /etc/ssh/sshd_config
         echo "PermitRootLogin yes" | tee -a /etc/ssh/sshd_config
-        service sshd restart
+        systemctl restart ssh
         check_command "配置 SSH 失败" "SSH 配置为允许 root 登录成功"
     else
         print_error "/etc/ssh/sshd_config 文件未找到"
@@ -101,7 +101,7 @@ module_change_root_home() {
         mkdir -p "$target_dir"
         check_command "创建目录失败" "目标目录创建成功"
     fi
-    usermod -d "$target_dir" root
+    # usermod -d "$target_dir" root # 注释掉原因：由于这句导致user root current used by process 1错误
     check_command "修改 root 用户的工作目录失败" "root 用户的工作目录已更改为 $target_dir"
 }
 
@@ -115,7 +115,7 @@ main() {
     module_increase_history_size
     module_change_root_home
     module_clean_system
-    print_info "初始化配置完成"
+    print_info "初始化配置完成，请重启服务器。"
 }
 
 # 执行主函数
