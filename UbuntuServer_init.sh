@@ -30,7 +30,7 @@ module_update_upgrade_system() {
 # 模块：安装通用工具
 module_install_common_tools() {
     print_info "正在安装通用工具..."
-    apt install -y curl wget nano tree net-tools screen traceroute htop sshpass openssl
+    apt install -y curl wget nano tree net-tools screen tmux traceroute htop sshpass openssl
     check_command "安装通用工具失败" "通用工具安装成功"
 }
 
