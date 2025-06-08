@@ -86,7 +86,6 @@ module_clean_system() {
     print_info "正在清理系统..."
     sudo apt clean
     sudo apt autoremove --purge -y
-    sudo logrotate -f /etc/logrotate.conf
     rm -rf /var/cache/apt/archives/*
     sudo rm -rf /tmp/*
     check_command "系统清理失败" "系统清理成功"
