@@ -27,4 +27,4 @@ ssh -p 22 ${REMOTE_USER}@${REMOTE_HOST}
 # 其他配置
 ## 配置 Gotify 通知 - 交互方式
 curl -fsSL -o setup_gotify_notify.sh https://github.com/emix1984/CustomizeServerEnvironment/raw/refs/heads/main/setup_gotify_notify.sh && \
-bash setup_gotify_notify.sh.sh
+bash setup_gotify_notify.sh
