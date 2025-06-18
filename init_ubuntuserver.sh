@@ -91,6 +91,12 @@ module_clean_system() {
     check_command "系统清理失败" "系统清理成功"
 }
 
+module_install_casaos() {
+    print_info "正在安装 CasaOS..."Add commentMore actions
+    curl -fsSL https://get.casaos.io | bash
+    check_command "安装 CasaOS 失败" "CasaOS 安装成功"
+}
+
 # 模块：修改 root 用户的默认工作目录
 module_change_root_home() {
     local target_dir="/DATA/AppData"
@@ -112,10 +118,15 @@ main() {
     module_install_ssh_copy_id
     module_install_and_configure_ssh
     module_increase_history_size
+
+    if [[ "$1" == "casaos" ]]; then
+        module_install_casaos
+    fi
+
     module_change_root_home
     module_clean_system
     print_info "初始化配置完成，请重启服务器。"
 }
 
 # 执行主函数
-main
+main "$@"
